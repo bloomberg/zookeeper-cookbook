@@ -4,8 +4,8 @@
 #
 # Copyright (C) 2015 Bloomberg Finance L.P.
 #
-default['zookeeper-cluster']['cluster']['name'] = 'zookeeper'
-default['zookeeper-cluster']['cluster']['node_type'] = 'participant'
+default['zookeeper-cluster']['cluster_name'] = 'zookeeper'
+default['zookeeper-cluster']['cluster_node_type'] = 'participant'
 
 default['zookeeper-cluster']['username'] = 'zookeeper'
 

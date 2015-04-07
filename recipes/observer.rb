@@ -6,5 +6,5 @@
 #
 include_recipe 'zookeeper-cluster::default'
 
-node.default['zookeeper-cluster']['cluster']['node_type'] = 'observer'
+node.default['zookeeper-cluster']['cluster_node_type'] = 'observer'
 include_recipe 'zookeeper-cluster::cluster'
