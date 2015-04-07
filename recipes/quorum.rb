@@ -6,10 +6,6 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+return if Chef::Config[:solo]
 include_recipe 'zookeeper-cluster::default'
-
-zookeeper_config ZookeeperCluster::Config.path do
-  user node['zookeeper-cluster']['user']
-  config ZookeeperCluster::Config.quorum
-  notifies :restart, 'service[zookeeper]'
-end
+tag node['zookeeper-cluster']['cluster_name']

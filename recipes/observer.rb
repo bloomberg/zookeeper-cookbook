@@ -6,6 +6,8 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+return if Chef::Config[:solo]
+
 include_recipe 'zookeeper-cluster::default'
 
 zookeeper_config ZookeeperCluster::Config.path do
@@ -13,3 +15,5 @@ zookeeper_config ZookeeperCluster::Config.path do
   config ZookeeperCluster::Config.observer
   notifies :restart, 'service[zookeeper]'
 end
+
+tag node['zookeeper-cluster']['cluster_tag']
