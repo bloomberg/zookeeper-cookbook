@@ -1,11 +1,10 @@
 #
-# Cookbook Name:: zookeeper-cluster
-# Recipe:: quorum
+# Cookbook: zookeeper-cluster-cookbook
+# License: Apache 2.0
 #
 # Copyright (C) 2015 Bloomberg Finance L.P.
 #
-# All rights reserved - Do Not Redistribute
-#
-return if Chef::Config[:solo]
 include_recipe 'zookeeper-cluster::default'
-tag node['zookeeper-cluster']['cluster_name']
+
+node.default['zookeeper-cluster']['node_type'] = 'participant'
+include_recipe 'zookeeper-cluster::cluster_config'

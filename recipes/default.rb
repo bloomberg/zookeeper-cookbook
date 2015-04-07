@@ -1,10 +1,8 @@
 #
-# Cookbook Name:: zookeeper-cluster
-# Recipe:: default
+# Cookbook: zookeeper-cluster-cookbook
+# License: Apache 2.0
 #
 # Copyright (C) 2015 Bloomberg Finance L.P.
-#
-# All rights reserved - Do Not Redistribute
 #
 node.default['java']['jdk_version'] = '7'
 include_recipe 'java::default'
