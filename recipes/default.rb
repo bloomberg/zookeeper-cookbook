@@ -13,6 +13,6 @@ libartifact_file "zookeeper-#{node['zookeeper-cluster']['version']}" do
   artifact_version node['zookeeper-cluster']['version']
   remote_url node['zookeeper-cluster']['remote_url'] % { version: artifact_version }
   remote_checksum node['zookeeper-cluster']['remote_checksum']
-  owner node['zookeeper-cluster']['user']
+  owner node['zookeeper-cluster']['username']
   group user.group if user.group
 end
