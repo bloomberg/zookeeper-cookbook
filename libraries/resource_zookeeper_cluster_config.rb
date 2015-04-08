@@ -15,6 +15,7 @@ class Chef::Resource::ZookeeperClusterConfig < Chef::Resource::LWRPBase
   attribute :client_port, kind_of: Integer, default: 2181
   attribute :election_port, kind_of: Integer, default: 2888
   attribute :leader_port, kind_of: Integer, default: 3888
+  attribute :data_dir, kind_of: String
   attribute :data_log_dir, kind_of: String
   attribute :global_outstanding_limit, kind_of: Integer, default: 1_000
   attribute :pre_alloc_size, kind_of: String
