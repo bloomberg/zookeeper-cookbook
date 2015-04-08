@@ -18,9 +18,19 @@ class Chef::Provider::ZookeeperClusterConfig < Chef::Provider::LWRPBase
       recursive true
     end
 
+    directory File.dirname(ZookeeperCluster.identifier_filename) do
+      recursive true
+    end
 
+    file ZookeeperCluster.identifier_filename do
+      content ZookeeperCluster.server_id
+      mode '0644'
+    end
   end
 
   action :remove do
+    file ZookeeperCluster.identifier_filename do
+      action :delete
+    end
   end
 end

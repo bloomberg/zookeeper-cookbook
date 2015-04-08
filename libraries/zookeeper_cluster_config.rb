@@ -7,6 +7,10 @@
 module ZookeeperCluster
   module Config
     class << self
+      def identifier_filename
+        File.join(data_directory, 'myid')
+      end
+
       def server_id
         node['zookeeper-cluster']['config']['server_id']
       end
