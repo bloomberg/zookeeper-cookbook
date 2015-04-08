@@ -8,6 +8,7 @@ default['zookeeper-cluster']['cluster_name'] = 'zookeeper'
 default['zookeeper-cluster']['cluster_node_type'] = 'participant'
 
 default['zookeeper-cluster']['username'] = 'zookeeper'
+default['zookeeper-cluster']['groupname'] = 'zookeeper'
 
 default['zookeeper-cluster']['init_type'] = :sysvinit
 default['zookeeper-cluster']['version'] = '3.4.6'
