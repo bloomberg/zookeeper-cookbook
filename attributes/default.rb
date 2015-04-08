@@ -7,6 +7,8 @@
 default['zookeeper-cluster']['cluster_name'] = 'zookeeper'
 default['zookeeper-cluster']['cluster_node_type'] = 'participant'
 
+default['zookeeper-cluster']['config']['server_id'] = 1
+
 default['zookeeper-cluster']['username'] = 'zookeeper'
 default['zookeeper-cluster']['groupname'] = 'zookeeper'
 
