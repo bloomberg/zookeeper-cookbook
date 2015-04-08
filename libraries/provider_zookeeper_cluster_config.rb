@@ -14,10 +14,6 @@ class Chef::Provider::ZookeeperClusterConfig < Chef::Provider::LWRPBase
   provides :zookeeper_cluster_config
 
   action :create do
-    directory File.dirname(ZookeeperCluster.config_filename(cluster_name)) do
-      recursive true
-    end
-
     directory File.dirname(ZookeeperCluster.identifier_filename) do
       recursive true
     end
@@ -25,6 +21,16 @@ class Chef::Provider::ZookeeperClusterConfig < Chef::Provider::LWRPBase
     file ZookeeperCluster.identifier_filename do
       content ZookeeperCluster.server_id
       mode '0644'
+    end
+
+    directory File.dirname(ZookeeperCluster.config_filename(cluster_name)) do
+      recursive true
+    end
+
+    template ZookeeperCluster.config_filename(cluster_name) do
+      source 'zoo.cfg.erb'
+      mode '0644'
+      variables(resource: @new_resource)
     end
   end
 
