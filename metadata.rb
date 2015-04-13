@@ -11,4 +11,3 @@ supports 'redhat', '>= 6.4'
 
 depends 'java'
 depends 'libartifact'
-depends 'poise-service'

@@ -28,10 +28,7 @@ zookeeper_cluster_config ZookeeperCluster::Config.cluster_name do
   skip_a_c_l ZookeeperCluster::Config.skip_acl?
 end
 
-poise_service 'zookeeper' do
-  provider node['zookeeper-cluster']['init_type']
-  command "bin/zkServer.sh -f #{ZookeeperCluster::Config.filename}"
-  user node['zookeeper-cluster']['username']
-  directory ArtifactCookbook.current_symlink(name)
-  environment('JAVA_HOME' => node['java']['java_home'])
+service 'zookeeper' do
+  supports restart: true, status: true
+  action [:enable, :start]
 end
