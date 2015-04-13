@@ -12,9 +12,9 @@ class Chef::Resource::ZookeeperClusterConfig < Chef::Resource::LWRPBase
   attribute :cluster_name, kind_of: String, name_attribute: true, required: true
   attribute :node_type, kind_of: String, required: true, default: 'participant', regex: /^(participant|observer)$/
   attribute :tick_time, kind_of: Integer, default: 2_000
-  attribute :client_port, kind_of: Integer, default: 2181
-  attribute :election_port, kind_of: Integer, default: 2888
-  attribute :leader_port, kind_of: Integer, default: 3888
+  attribute :client_port, kind_of: Integer, default: 2_181
+  attribute :election_port, kind_of: Integer, default: 2_888
+  attribute :leader_port, kind_of: Integer, default: 3_888
   attribute :data_dir, kind_of: String
   attribute :data_log_dir, kind_of: String
   attribute :global_outstanding_limit, kind_of: Integer, default: 1_000

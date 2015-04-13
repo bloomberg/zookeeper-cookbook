@@ -14,28 +14,38 @@ class Chef::Provider::ZookeeperClusterConfig < Chef::Provider::LWRPBase
   provides :zookeeper_cluster_config
 
   action :create do
-    directory File.dirname(ZookeeperCluster.identifier_filename) do
+    directory File.dirname(ZookeeperCluster::Config.identifier_filename) do
       recursive true
-    end
-
-    file ZookeeperCluster.identifier_filename do
-      content ZookeeperCluster.server_id
       mode '0644'
+      owner run_user
+      group run_group
     end
 
-    directory File.dirname(ZookeeperCluster.config_filename(cluster_name)) do
+    file ZookeeperCluster::Config.identifier_filename do
+      content ZookeeperCluster::Config.server_id
+      mode '0644'
+      owner run_user
+      group run_group
+    end
+
+    directory File.dirname(ZookeeperCluster::Config.filename(cluster_name)) do
       recursive true
+      mode '0644'
+      owner run_user
+      group run_group
     end
 
-    template ZookeeperCluster.config_filename(cluster_name) do
+    template ZookeeperCluster::Config.filename(cluster_name) do
       source 'zoo.cfg.erb'
       mode '0644'
+      owner run_user
+      group run_group
       variables(resource: @new_resource)
     end
   end
 
   action :remove do
-    file ZookeeperCluster.identifier_filename do
+    file ZookeeperCluster::Config.identifier_filename do
       action :delete
     end
   end
