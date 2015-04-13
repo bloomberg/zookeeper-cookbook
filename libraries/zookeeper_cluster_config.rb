@@ -7,7 +7,11 @@
 module ZookeeperCluster
   module Config
     def filename(cluster_name)
-      File.join(ArtifactCookbook.shared_path('zookeeper'), 'conf', "#{cluster_name}.cfg")
+      File.join(config_directory, "#{cluster_name}.cfg")
+    end
+
+    def config_directory
+      File.join(ArtifactCookbook.shared_path('zookeeper'), 'conf')
     end
 
     def identifier_filename

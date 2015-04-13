@@ -26,7 +26,7 @@ libartifact_file "zookeeper-#{node['zookeeper-cluster']['version']}" do
   group node['zookeeper-cluster']['groupname']
 end
 
-template '/etc/default/zookeeper' do
+template File.join(ZookeeperCluster::Config.config_directory, 'zookeeper-env.sh') do
   source 'zookeeper-env.sh.erb'
   mode '0644'
   variables(java_home: node['java']['java_home'])
