@@ -18,13 +18,6 @@ Vagrant.configure('2') do |config|
       guest.vm.provision :chef_zero do |chef|
         chef.nodes_path = File.expand_path('../.vagrant/chef/nodes', __FILE__)
         chef.run_list = %w(zookeeper-cluster::quorum)
-        chef.json = {
-          'zookeeper-cluster' => {
-            'config' => {
-              'server_id' => id
-            }
-          }
-        }
       end
     end
   end
