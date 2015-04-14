@@ -12,6 +12,9 @@ class Chef::Resource::ZookeeperClusterConfig < Chef::Resource::LWRPBase
 
   attribute(:servers,
     option_collector: true)
+  attribute(:config,
+    option_collector: true)
+
   attribute(:cluster_name,
     kind_of: String,
     name_attribute: true,
@@ -21,9 +24,6 @@ class Chef::Resource::ZookeeperClusterConfig < Chef::Resource::LWRPBase
     kind_of: String,
     default: lazy { node['zookeeper-cluster']['cluster_node_type'] },
     regex: /^(participant|observer)/)
-  attribute(:cluster_node_id,
-    kind_of: Integer,
-    default: lazy { node['zookeeper-cluster']['cluster_node_id'] })
   attribute(:tick_time,
     kind_of: Integer,
     default: lazy { node['zookeeper-cluster']['config']['tick_time'] })
@@ -87,4 +87,33 @@ class Chef::Resource::ZookeeperClusterConfig < Chef::Resource::LWRPBase
   attribute(:skip_a_c_l,
     kind_of: [TrueClass, FalseClass, nil],
     default: lazy { node['zookeeper-cluster']['config']['skip_a_c_l'] })
+
+  # @see https://github.com/zk-ruby/zk-server/blob/master/lib/zk-server/config.rb#L270-300
+  def to_config_file_str
+    h = {
+      'dataDir' => data_dir,
+      'skipACL' => skip_a_c_l,
+      'tickTime' => tick_time,
+      'initLimit' => init_limit,
+      'syncLimit' => sync_limit,
+      'forceSync' => force_sync,
+      'leaderServes' => leader_serves,
+      'clientPort' => client_port,
+      'dataLogDir' => data_log_dir,
+      'preAllocSize' => pre_alloc_size,
+      'maxClientCnxns' => max_client_cnxns,
+      'clientPortAddress' => client_port_address,
+      'minSessionTimeout' => min_session_timeout,
+      'maxSessionTimeout' => max_session_timeout,
+      'globalOutstandingLimit' => global_outstanding_limit
+    }.merge(config).delete_if { |k,v| v.nil? }
+
+    %w[leaderServes skipACL forceSync].each do |yorn_key|
+      if h.has_key?(yorn_key)
+        h[yorn_key] = h[york_key] ? 'yes' : 'no'
+      end
+    end
+
+    h.sort.map { |kv| kv.join('=') }.join("\n")
+  end
 end

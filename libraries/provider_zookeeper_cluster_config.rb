@@ -21,24 +21,16 @@ class Chef::Provider::ZookeeperClusterConfig < Chef::Provider::LWRPBase
       group run_group
     end
 
-    file ZookeeperCluster::Config.myid_filepath do
-      content cluster_node_id
+    file ZookeeperCluster::Config.filename(cluster_name) do
+      content @new_resource.to_config_file_str
       mode '0644'
       owner run_user
       group run_group
-    end
-
-    template ZookeeperCluster::Config.filename(cluster_name) do
-      source 'zoo.cfg.erb'
-      mode '0644'
-      owner run_user
-      group run_group
-      variables(resource: @new_resource)
     end
   end
 
   action :remove do
-    file ZookeeperCluster::Config.myid_filepath do
+    file ZookeeperCluster::Config.filename(cluster_name) do
       action :delete
     end
   end

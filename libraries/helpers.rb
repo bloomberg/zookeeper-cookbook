@@ -18,12 +18,27 @@ module ZookeeperClusterCookbook
       File.join(ArtifactCookbook.shared_path('zookeeper'), 'conf')
     end
 
+    def shared_directory
+      ArtifactCookbook.shared_path('zookeeper')
+    end
+
     def run_user
       node['zookeeper-cluster']['username']
     end
 
     def run_group
       node['zookeeper-cluster']['groupname']
+    end
+
+    # @see https://github.com/zk-ruby/zk-server/blob/master/lib/zk-server/config.rb#L270-300
+    def config_to_file_str(config)
+      %w[leaderServes skipACL forceSync].each do |yorn_key|
+      if config.has_key?(yorn_key)
+        config[yorn_key] = config[york_key] ? 'yes' : 'no'
+      end
+      config.sort.map { |k,v| kv.join('=') }.join("\n")
+    end
+
     end
   end
 end
