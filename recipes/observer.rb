@@ -4,7 +4,5 @@
 #
 # Copyright (C) 2015 Bloomberg Finance L.P.
 #
-include_recipe 'zookeeper-cluster::default'
-
 node.default['zookeeper-cluster']['cluster_node_type'] = 'observer'
 include_recipe 'zookeeper-cluster::cluster'

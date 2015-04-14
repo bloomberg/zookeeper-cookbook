@@ -14,23 +14,23 @@ class Chef::Provider::ZookeeperClusterConfig < Chef::Provider::LWRPBase
   provides :zookeeper_cluster_config
 
   action :create do
-    directory ZookeeperClusterCookbook::Config.config_directory do
+    directory ZookeeperClusterCookbook.config_directory do
       recursive true
       mode '0644'
-      owner run_user
-      group run_group
+      owner ZookeeperClusterCookbook.run_user
+      group ZookeeperClusterCookbook.run_group
     end
 
-    file ZookeeperCluster::Config.filename(cluster_name) do
+    file ZookeeperClusterCookbook.config_filepath(cluster_name) do
       content @new_resource.to_config_file_str
       mode '0644'
-      owner run_user
-      group run_group
+      owner ZookeeperClusterCookbook.run_user
+      group ZookeeperClusterCookbook.run_group
     end
   end
 
   action :remove do
-    file ZookeeperCluster::Config.filename(cluster_name) do
+    file ZookeeperClusterCookbook.config_filepath(cluster_name) do
       action :delete
     end
   end
