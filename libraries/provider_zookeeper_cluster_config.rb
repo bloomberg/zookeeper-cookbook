@@ -7,29 +7,22 @@
 require 'forwardable'
 
 class Chef::Provider::ZookeeperClusterConfig < Chef::Provider::LWRPBase
+  include Poise
   extend Forwardable
-  def_delegators :@new_resource, :cluster_name, :node_type
+  def_delegators :@new_resource, :cluster_name, :cluster_node_type, :cluster_node_id
 
-  use_inline_resources if defined?(use_inline_resources)
   provides :zookeeper_cluster_config
 
   action :create do
-    directory File.dirname(ZookeeperCluster::Config.identifier_filename) do
+    directory ZookeeperClusterCookbook::Config.config_directory do
       recursive true
       mode '0644'
       owner run_user
       group run_group
     end
 
-    file ZookeeperCluster::Config.identifier_filename do
-      content ZookeeperCluster::Config.server_id
-      mode '0644'
-      owner run_user
-      group run_group
-    end
-
-    directory File.dirname(ZookeeperCluster::Config.filename(cluster_name)) do
-      recursive true
+    file ZookeeperCluster::Config.myid_filepath do
+      content cluster_node_id
       mode '0644'
       owner run_user
       group run_group
@@ -45,7 +38,7 @@ class Chef::Provider::ZookeeperClusterConfig < Chef::Provider::LWRPBase
   end
 
   action :remove do
-    file ZookeeperCluster::Config.identifier_filename do
+    file ZookeeperCluster::Config.myid_filepath do
       action :delete
     end
   end
