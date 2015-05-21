@@ -4,17 +4,16 @@
 #
 # Copyright (C) 2015 Bloomberg Finance L.P.
 #
-default['zookeeper-cluster']['cluster_name'] = 'zookeeper'
-default['zookeeper-cluster']['cluster_node_type'] = 'participant'
-default['zookeeper-cluster']['cluster_node_id'] = 1
-
-default['zookeeper-cluster']['username'] = 'zookeeper'
-default['zookeeper-cluster']['groupname'] = 'zookeeper'
+default['zookeeper-cluster']['config']['path'] = '/etc/zookeeper/zoo.cfg'
+default['zookeeper-cluster']['config']['myid'] = 1
+default['zookeeper-cluster']['config']['servers'] = []
 
 default['zookeeper-cluster']['service_name'] = 'zookeeper'
-default['zookeeper-cluster']['service_init_type'] = :sysvinit
-default['zookeeper-cluster']['environment']['jmxport'] = 9_010
+default['zookeeper-cluster']['service_user'] = 'zookeeper'
+default['zookeeper-cluster']['service_group'] = 'zookeeper'
 
-default['zookeeper-cluster']['version'] = '3.4.6'
-default['zookeeper-cluster']['remote_checksum'] = '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'
-default['zookeeper-cluster']['remote_url'] = "http://mirror.cc.columbia.edu/pub/software/apache/zookeeper/zookeeper-%{version}/zookeeper-%{version}.tar.gz"
+default['zookeeper-cluster']['service']['environment']['jmxport'] = 9_010
+
+default['zookeeper-cluster']['service']['version'] = '3.5.0-alpha'
+default['zookeeper-cluster']['service']['binary_checksum'] = '87814f3afa9cf846db8d7e695e82e11480f7b19d79d8f146e58c4aefb4289bf4'
+default['zookeeper-cluster']['service']['binary_url'] = "http://mirror.cc.columbia.edu/pub/software/apache/zookeeper/zookeeper-%{version}/zookeeper-%{version}.tar.gz"

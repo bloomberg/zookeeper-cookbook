@@ -1,11 +1,5 @@
 source 'https://rubygems.org'
 
-group :integration, :development, :test do
-  gem 'halite', git: 'https://github.com/poise/halite'
-  gem 'poise', git: 'https://github.com/poise/poise'
-  gem 'poise-boiler', git: 'https://github.com/poise/poise-boiler'
-end
-
 group :lint do
   gem 'rubocop'
 end
@@ -37,6 +31,7 @@ group :development do
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'rake'
+  gem 'stove'
 end
 
 group :doc do

@@ -15,7 +15,4 @@ platforms:
 suites:
   - name: default
     run_list:
-      - "recipe[zookeeper-cluster::default]"
-  - name: quorum
-    run_list:
       - "recipe[zookeeper-cluster::quorum]"
