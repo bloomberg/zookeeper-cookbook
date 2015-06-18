@@ -103,14 +103,14 @@ class Chef::Provider::ZookeeperService < Chef::Provider
 
       directory new_resource.data_dir do
         recursive true
-        mode '0754'
+        mode '0755'
         owner new_resource.user
         group new_resource.group
       end
 
       directory new_resource.log_dir do
         recursive true
-        mode '0754'
+        mode '0755'
         owner new_resource.user
         group new_resource.group
       end
