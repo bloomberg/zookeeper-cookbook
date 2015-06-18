@@ -77,7 +77,7 @@ class Chef::Resource::ZookeeperConfig < Chef::Resource
     notifying_block do
       directory ::File.dirname(new_resource.path) do
         recursive true
-        mode '0644'
+        mode '0755'
       end
 
       file ::File.join(::File.dirname(new_resource.path), 'myid') do

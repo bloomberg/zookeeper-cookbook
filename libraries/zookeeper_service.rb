@@ -59,7 +59,7 @@ class Chef::Resource::ZookeeperService < Chef::Resource
 
   # @!attribute data_log_dir
   # @return [String]
-  attribute(:data_log_dir, kind_of: [NilClass, String], default: nil)
+  attribute(:log_dir, kind_of: String, default: '/var/log/zookeeper')
 
   # @!attribute config_filename
   # @return [String]
@@ -103,7 +103,14 @@ class Chef::Provider::ZookeeperService < Chef::Provider
 
       directory new_resource.data_dir do
         recursive true
-        mode '0640'
+        mode '0754'
+        owner new_resource.user
+        group new_resource.group
+      end
+
+      directory new_resource.log_dir do
+        recursive true
+        mode '0754'
         owner new_resource.user
         group new_resource.group
       end
@@ -124,7 +131,9 @@ class Chef::Provider::ZookeeperService < Chef::Provider
     service.command(new_resource.command)
     service.directory(new_resource.current_path)
     service.user(new_resource.user)
-    service.environment(new_resource.environment)
+    service.environment(new_resource.environment.merge(
+      'ZOO_LOG_DIR' => new_resource.log_dir,
+    ))
     service.restart_on_update(true)
   end
 end
