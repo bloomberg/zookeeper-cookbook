@@ -6,7 +6,7 @@
 #
 require 'poise_service/service_mixin'
 
-# Resource for managing the Consul service on an instance.
+# Resource for managing the Zookeeper service on an instance.
 # @since 1.0.0
 class Chef::Resource::ZookeeperService < Chef::Resource
   provides(:zookeeper_service)
@@ -73,7 +73,7 @@ class Chef::Resource::ZookeeperService < Chef::Resource
   end
 end
 
-# Provider for managing the Consul service on an instance.
+# Provider for managing the Zookeeper service on an instance.
 # @since 1.0.0
 class Chef::Provider::ZookeeperService < Chef::Provider
   provides(:zookeeper_service)
