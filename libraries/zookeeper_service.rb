@@ -55,7 +55,7 @@ class Chef::Resource::ZookeeperService < Chef::Resource
 
   # @!attribute data_dir
   # @return [String]
-  attribute(:data_dir, kind_of: String, default: '/var/db/zookeeper')
+  attribute(:data_dir, kind_of: String, default: '/var/lib/zookeeper')
 
   # @!attribute data_log_dir
   # @return [String]

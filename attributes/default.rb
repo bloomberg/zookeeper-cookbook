@@ -5,8 +5,7 @@
 # Copyright (C) 2015 Bloomberg Finance L.P.
 #
 default['zookeeper-cluster']['config']['path'] = '/etc/zookeeper/zoo.cfg'
-default['zookeeper-cluster']['config']['myid'] = 1
-default['zookeeper-cluster']['config']['servers'] = []
+default['zookeeper-cluster']['config']['ensemble'] = []
 
 default['zookeeper-cluster']['service_name'] = 'zookeeper'
 default['zookeeper-cluster']['service_user'] = 'zookeeper'

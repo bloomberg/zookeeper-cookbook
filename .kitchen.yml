@@ -15,4 +15,9 @@ platforms:
 suites:
   - name: default
     run_list:
-      - "recipe[zookeeper-cluster::quorum]"
+      - "recipe[zookeeper-cluster::default]"
+    attributes:
+      zookeeper-cluster:
+        config:
+          ensemble:
+            - "localhost"
