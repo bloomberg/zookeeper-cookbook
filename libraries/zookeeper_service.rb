@@ -9,6 +9,7 @@ require 'poise_service/service_mixin'
 # Resource for managing the Zookeeper service on an instance.
 # @since 1.0.0
 class Chef::Resource::ZookeeperService < Chef::Resource
+  include Poise
   provides(:zookeeper_service)
   include PoiseService::ServiceMixin
 
@@ -76,6 +77,7 @@ end
 # Provider for managing the Zookeeper service on an instance.
 # @since 1.0.0
 class Chef::Provider::ZookeeperService < Chef::Provider
+  include Poise
   provides(:zookeeper_service)
   include PoiseService::ServiceMixin
 
