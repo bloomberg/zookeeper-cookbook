@@ -98,7 +98,7 @@ class Chef::Provider::ZookeeperService < Chef::Provider
         install_path new_resource.install_path
         remote_url new_resource.binary_url % { version: new_resource.version }
         remote_checksum new_resource.binary_checksum
-        only_if { new_resource.install_method 'binary' }
+        only_if { new_resource.install_method == 'binary' }
       end
 
       directory new_resource.data_dir do
