@@ -8,6 +8,7 @@ require 'poise'
 
 class Chef::Resource::ZookeeperConfig < Chef::Resource
   include Poise(fused: true)
+  provides(:zookeeper_config)
 
   attribute(:path, kind_of: String, name_attribute: true, cannot_be: :empty)
   attribute(:user, kind_of: String, default: 'zookeeper', cannot_be: :empty)
