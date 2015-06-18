@@ -69,39 +69,37 @@ class Chef::Resource::ZookeeperConfig < Chef::Resource
     end
 
     config = ensemble.map { |n| "server.#{ensemble.index(n).next}:#{n}:#{leader_port}:#{election_port}" }
-    h.merge(h) { |k, v| "#{k}=#{v}" }.values.concat(config).join("\n")
+    h.map { |v| v.join('=') }.concat(config).join("\n")
   end
 
   action(:create) do
-    directory ::File.dirname(new_resource.path) do
-      recursive true
-      mode '0644'
-    end
+    notifying_block do
+      directory ::File.dirname(new_resource.path) do
+        recursive true
+        mode '0644'
+      end
 
-    file ::File.join(::File.dirname(new_resource.path), 'myid') do
-      content new_resource.myid
-      mode '0640'
-      owner new_resource.user
-      group new_resource.group
-    end
+      file ::File.join(::File.dirname(new_resource.path), 'myid') do
+        content new_resource.myid.to_s
+        mode '0644'
+      end
 
-    file new_resource.path do
-      content new_resource.to_s
-      mode '0644'
+      file new_resource.path do
+        content new_resource.to_s
+        mode '0644'
+      end
     end
   end
 
   action(:delete) do
-    directory new_resource.data_dir do
-      action :delete
-    end
+    notifying_block do
+      directory new_resource.data_dir do
+        action :delete
+      end
 
-    directory new_resource.data_log_dir do
-      action :delete
-    end
-
-    directory ::File.dirname(new_resource.path) do
-      action :delete
+      directory ::File.dirname(new_resource.path) do
+        action :delete
+      end
     end
   end
 end

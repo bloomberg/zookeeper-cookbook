@@ -15,6 +15,7 @@ poise_service_user node['zookeeper-cluster']['service_user'] do
 end
 
 zookeeper_config node['zookeeper-cluster']['service_name'] do |r|
+  instance_name node['hostname']
   user node['zookeeper-cluster']['service_user']
   group node['zookeeper-cluster']['service_group']
 

@@ -63,10 +63,14 @@ class Chef::Resource::ZookeeperService < Chef::Resource
 
   # @!attribute config_filename
   # @return [String]
-  attribute(:config_path, kind_of: String, default: '/etc/zookeeper/zookeeper.cfg')
+  attribute(:config_path, kind_of: String, default: '/etc/zookeeper/zoo.cfg')
 
   def default_environment
     { PATH: '/usr/local/bin:/usr/bin:/bin' }
+  end
+
+  def current_path
+    ::File.join(install_path, 'zookeeper', 'current', "zookeeper-#{version}")
   end
 
   def command
@@ -118,7 +122,7 @@ class Chef::Provider::ZookeeperService < Chef::Provider
 
   def service_options(service)
     service.command(new_resource.command)
-    service.directory(new_resource.data_dir)
+    service.directory(new_resource.current_path)
     service.user(new_resource.user)
     service.environment(new_resource.environment)
     service.restart_on_update(true)

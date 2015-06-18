@@ -11,7 +11,7 @@ default['zookeeper-cluster']['service_name'] = 'zookeeper'
 default['zookeeper-cluster']['service_user'] = 'zookeeper'
 default['zookeeper-cluster']['service_group'] = 'zookeeper'
 
-default['zookeeper-cluster']['service']['environment']['jmxport'] = 9_010
+default['zookeeper-cluster']['service']['environment']['JMXPORT'] = 9_010
 
 default['zookeeper-cluster']['service']['version'] = '3.5.0-alpha'
 default['zookeeper-cluster']['service']['binary_checksum'] = '87814f3afa9cf846db8d7e695e82e11480f7b19d79d8f146e58c4aefb4289bf4'
