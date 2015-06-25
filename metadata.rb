@@ -7,8 +7,8 @@ long_description 'Application cookbook which installs and configures a Zookeeper
 version '1.0.0'
 
 supports 'ubuntu', '>= 12.04'
-supports 'centos', '>= 6.4'
-supports 'redhat', '>= 6.4'
+supports 'centos', '>= 6.6'
+supports 'redhat', '>= 6.6'
 
 depends 'java'
 depends 'libartifact', '~> 1.2'
