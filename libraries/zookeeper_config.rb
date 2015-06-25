@@ -80,7 +80,7 @@ class Chef::Resource::ZookeeperConfig < Chef::Resource
         mode '0755'
       end
 
-      file ::File.join(::File.dirname(new_resource.path), 'myid') do
+      file ::File.join(new_resource.data_dir, 'myid') do
         content new_resource.myid.to_s
         mode '0644'
       end
