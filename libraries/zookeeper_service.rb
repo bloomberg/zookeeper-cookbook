@@ -12,6 +12,7 @@ class Chef::Resource::ZookeeperService < Chef::Resource
   include Poise
   provides(:zookeeper_service)
   include PoiseService::ServiceMixin
+  default_action(:enable)
 
   # @!attribute service_name
   # @return [String]
