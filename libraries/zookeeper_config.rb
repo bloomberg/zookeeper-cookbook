@@ -44,6 +44,11 @@ class Chef::Resource::ZookeeperConfig < Chef::Resource
         mode '0755'
       end
 
+      directory new_resource.data_dir do
+        recursive true
+        mode '0755'
+      end
+
       file ::File.join(new_resource.data_dir, 'myid') do
         content new_resource.myid
         mode '0644'
