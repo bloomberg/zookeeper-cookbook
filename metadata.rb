@@ -11,7 +11,7 @@ supports 'centos', '>= 6.6'
 supports 'redhat', '>= 6.6'
 
 depends 'java'
-depends 'libartifact', '~> 1.2'
+depends 'libartifact', '~> 1.3'
 depends 'poise', '~> 2.0'
 depends 'poise-service'
 depends 'selinux'
