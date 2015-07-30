@@ -9,7 +9,7 @@ default['zookeeper-cluster']['config']['ensemble'] = []
 default['zookeeper-cluster']['config']['properties']['tickTime'] = 2000
 default['zookeeper-cluster']['config']['properties']['initLimit'] = 5
 default['zookeeper-cluster']['config']['properties']['syncLimit'] = 2
-default['zookeeper-cluster']['config']['properties']['leaderServces'] = 'yes'
+default['zookeeper-cluster']['config']['properties']['leaderServes'] = 'yes'
 default['zookeeper-cluster']['config']['properties']['forceSync'] = 'no'
 
 default['zookeeper-cluster']['service_name'] = 'zookeeper'
