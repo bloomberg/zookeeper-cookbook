@@ -16,7 +16,6 @@ describe ZookeeperClusterCookbook::Resource::ZookeeperService do
       end
     end
 
-    it { run_chef }
   end
 
   context '#action_disable' do
@@ -26,7 +25,5 @@ describe ZookeeperClusterCookbook::Resource::ZookeeperService do
         action :disable
       end
     end
-
-    it { run_chef }
   end
 end

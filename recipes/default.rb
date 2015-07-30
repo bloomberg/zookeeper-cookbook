@@ -16,7 +16,7 @@ end
 
 zookeeper_config node['zookeeper-cluster']['service_name'] do |r|
   instance_name node['fqdn']
-  user node['zookeeper-cluster']['service_user']
+  owner node['zookeeper-cluster']['service_user']
   group node['zookeeper-cluster']['service_group']
 
   node['zookeeper-cluster']['config'].each_pair { |k, v| r.send(k, v) }
@@ -29,4 +29,5 @@ zookeeper_service node['zookeeper-cluster']['service_name'] do |r|
   config_path node['zookeeper-cluster']['config']['path']
 
   node['zookeeper-cluster']['service'].each_pair { |k, v| r.send(k, v) }
+  action [:create, :enable]
 end
