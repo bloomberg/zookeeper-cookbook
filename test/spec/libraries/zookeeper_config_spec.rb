@@ -1,10 +1,46 @@
-require 'spec_helper'
+require 'poise_boiler/spec_helper'
+require 'poise'
 
-describe_recipe 'zookeeper-cluster::default' do
-  cached(:chef_run) { ChefSpec::SoloRunner.new(step_into: %w{zookeeper_config}).converge(described_recipe) }
-  context 'with default attributes' do
-    it 'converges successfully' do
-      chef_run
+RSpec.configure do |config|
+  config.include Halite::SpecHelper
+end
+
+require_relative '../../../libraries/zookeeper_config'
+
+describe ZookeeperClusterCookbook::Resource::ZookeeperConfig do
+  step_into(:zookeeper_config)
+  context '#action_create' do
+    recipe do
+      zookeeper_config '/etc/zookeeper/zoo.properties' do
+        instance_name 'a'
+        ensemble %w{a b c}
+      end
     end
+
+    it { is_expected.to create_directory('/etc/zookeeper').with(recursive: true) }
+    it { is_expected.to create_file('/var/lib/zookeeper/myid') }
+    it do
+      is_expected.to create_file('/etc/zookeeper/zoo.properties')
+    end
+    it do
+      is_expected.to create_directory('/var/lib/zookeeper')
+      .with(owner: 'zookeeper', group: 'zookeeper')
+      .with(recursive: true)
+    end
+    it { run_chef }
+  end
+
+  context '#action_delete' do
+    recipe do
+      zookeeper_config '/etc/zookeeper/zoo.properties' do
+        instance_name 'a'
+        ensemble %w{a b c}
+        action :delete
+      end
+    end
+
+    it { is_expected.to delete_directory('/var/lib/zookeeper') }
+    it { is_expected.to delete_directory('/etc/zookeeper') }
+    it { run_chef }
   end
 end
