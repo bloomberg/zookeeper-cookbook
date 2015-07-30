@@ -16,10 +16,6 @@ module ZookeeperClusterCookbook
       include PoiseService::ServiceMixin
       default_action(:enable)
 
-      # @!attribute service_name
-      # @return [String]
-      attribute(:service_name, kind_of: String, name_attribute: true)
-
       # @!attribute version
       # @return [String]
       attribute(:version, kind_of: String, required: true)
@@ -66,7 +62,7 @@ module ZookeeperClusterCookbook
 
       # @!attribute config_filename
       # @return [String]
-      attribute(:config_path, kind_of: String, default: '/etc/zookeeper/zoo.cfg')
+      attribute(:config_path, kind_of: String, default: '/etc/zookeeper/zoo.properties')
 
       def default_environment
         { PATH: '/usr/local/bin:/usr/bin:/bin' }
