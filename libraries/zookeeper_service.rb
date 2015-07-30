@@ -14,11 +14,8 @@ module ZookeeperClusterCookbook
       include Poise
       provides(:zookeeper_service)
       include PoiseService::ServiceMixin
-      default_action(:enable)
-
-      # @!attribute service_name
-      # @return [String]
-      attribute(:service_name, kind_of: String, name_attribute: true)
+      actions(:create)
+      default_action(:create)
 
       # @!attribute version
       # @return [String]
@@ -66,7 +63,7 @@ module ZookeeperClusterCookbook
 
       # @!attribute config_filename
       # @return [String]
-      attribute(:config_path, kind_of: String, default: '/etc/zookeeper/zoo.cfg')
+      attribute(:config_path, kind_of: String, default: '/etc/zookeeper/zoo.properties')
 
       def default_environment
         { PATH: '/usr/local/bin:/usr/bin:/bin' }
@@ -90,7 +87,7 @@ module ZookeeperClusterCookbook
       provides(:zookeeper_service)
       include PoiseService::ServiceMixin
 
-      def action_enable
+      def action_create
         notifying_block do
           package new_resource.package_name do
             version new_resource.version unless new_resource.version.nil?
@@ -105,7 +102,11 @@ module ZookeeperClusterCookbook
             remote_checksum new_resource.binary_checksum
             only_if { new_resource.install_method == 'binary' }
           end
+        end
+      end
 
+      def action_enable
+        notifying_block do
           directory new_resource.data_dir do
             recursive true
             mode '0755'
@@ -137,7 +138,7 @@ module ZookeeperClusterCookbook
         service.directory(new_resource.current_path)
         service.user(new_resource.user)
         service.environment(new_resource.environment.merge(
-          'ZOO_LOG_DIR' => new_resource.log_dir,
+          'ZOO_LOG_DIR' => new_resource.log_dir
         ))
         service.restart_on_update(true)
       end

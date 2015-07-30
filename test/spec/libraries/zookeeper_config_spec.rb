@@ -27,7 +27,6 @@ describe ZookeeperClusterCookbook::Resource::ZookeeperConfig do
       .with(owner: 'zookeeper', group: 'zookeeper')
       .with(recursive: true)
     end
-    it { run_chef }
   end
 
   context '#action_delete' do
@@ -41,6 +40,5 @@ describe ZookeeperClusterCookbook::Resource::ZookeeperConfig do
 
     it { is_expected.to delete_directory('/var/lib/zookeeper') }
     it { is_expected.to delete_directory('/etc/zookeeper') }
-    it { run_chef }
   end
 end
