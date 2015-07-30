@@ -5,6 +5,7 @@ gem 'poise-boiler'
 
 group :lint do
   gem 'rubocop'
+  gem 'foodcritic'
 end
 
 group :kitchen_common do
