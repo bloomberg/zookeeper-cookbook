@@ -7,82 +7,57 @@ commonly used for maintaining configuration information, distributed
 service discovery and providing coordination services. This cookbook
 takes a simplified approach towards configuring Apache Zookeeper.
 
-## Platforms
-This cookbook utilizes [Test Kitchen][8] to run unit and integration
-tests. It is certified to run on the following platforms (these are
-the ones we test in our integration tests):
-- CentOS >= 6.6 (RHEL)
-- Ubuntu >= 12.04
+## Basic Usage
+This cookbook was designed from the ground up to make it dead simple
+to install and configure a Zookeeper cluster using Chef. It also highlights
+several of our best practices for developing reusable Chef cookbooks
+at Bloomberg.
 
-## Dependencies
-This cookbook has a few required dependencies which must be uploaded
-to the Chef Server. Our preferred method of doing this is to simply
-use `bin/berks upload`. We have included a simple table below with
-descriptions on what parts of dependency cookbooks are used.
+This cookbook provides [node attributes](attributes/default.rb) which
+can be used to fine tune the default recipe which installs and
+configures Zookeeper. The values from the node attributes are passed
+directly into the configuration and service resources.
 
-| Cookbook Name | Usage |
-| ------------- | ----- |
-| [libartifact][4] | [Library cookbook][3] which manages on-disk versions of release artifacts. |
-| [Poise][5] | [Library cookbook][3] which provides reusable Chef patterns. |
-| [Poise Service][6] | [Library cookbook][3] which provides reusable patterns for services. |
-| [SELinux][7] | [Application cookbook][0] which configures SELinux. |
+Out of the box the following platforms are certified to work and
+are tested using our [Test Kitchen][8] configuration. Additional platforms
+_may_ work, but your mileage may vary.
+- CentOS (RHEL) 6.6, 7.1
+- Ubuntu 12.04, 14.04
 
-## Attributes
-This cookbook provides node attributes which can be used to fine tune
-how the default recipe configures the instance. These node attributes
-are nested where `config/properties/tickTime` would be equivalent to
-`node['zookeeper-cluster']['config']['properties']['tickTime']`.
+The correct way to use this cookbook is to create a
+[wrapper cookbook][2] which configures all of the members of the
+Zookeeper ensemble (cluster). We do this by using a data bag for each
+Chef environment. The default recipe in your wrapper cookbook may
+look something like the following block:
+```ruby
+bag = data_bag_item('config', 'zookeeper')[node.chef_environment]
+node.default['zookeeper-cluster']['config']['instance_name'] = node['ipaddress']
+node.default['zookeeper-cluster']['config']['ensemble'] = bag['ensemble']
+include_recipe 'zookeeper-cluster::default'
+```
 
-| Name | Type | Default |
-| ---- | ---- | ------- |
-| config/path | String | /etc/zookeeper/zoo.properties |
-| config/ensemble | Array | [] |
-| config/properties/tickTime | Integer | 2000 |
-| config/properties/initLimit | Integer | 5 |
-| config/properties/syncLimit | Integer | 2 |
-| config/properties/leaderServes | String | yes |
-| config/properties/forceSync | String | no |
-| service_name | String | zookeeper |
-| service_user | String | zookeeper |
-| service_group | String | zookeeper |
-| service/environment/JMXPORT | Integer | 9010 |
-| service/environment/version | String | 3.5.0-alpha |
-
-## Resources/Providers
-This cookbook provides resource and provider primitives to manage
-the Apache Zookeeper service locally on a node. These primitives
-are what is used in the default recipe, and should be used in
-your own [wrapper cookbooks][2].
-
-### zookeeper_config
-This resource is a Chef primitive which provides validation on top of
-the [Apache Zookeeper service configuration][9]. It is meant to
-provide a set of sane defaults and be configured using node attributes
-through a [wrapper cookbook][2]. Some of the resource properties which
-are made available (and are validated):
-
-| Property | Type | Description | Default |
-| -------- | ---- | ----------- | ------- |
-| path | String | File system path where configuration is written. | name |
-| owner | String | System username for configuration ownership. | zookeeper |
-| group | String | System groupname for configuration ownership. | zookeeper |
-
-### zookeeper_service
-This resource is a Chef primitive which manages the lifecycle of the
-Apache Zookeeper service on the node. Through the
-[poise-service cookbook][6] it supports several different providers
-for service initialization (e.g. sysvinit, systemd, upstart, etc).
-
-| Property | Type | Description | Default |
-| -------- | ---- | ----------- | ------- |
-| version | String | Version of the Apache Zookeeper server. | 3.5.0-alpha |
-| install_method | String | Type of way to install Apache Zookeeper. | binary |
-| install_path | String | Filesystem absolute path to install Apache Zookeeper. | /srv |
-| user | String | System username which Apache Zookeeper service will run as. | zookeeper |
-| group | String | System groupname which Apache Zookeeper service will run as. | zookeeper |
-| data_dir | String | Filesystem absolute path to the data directory. | /var/lib/zookeeper |
-| log_dir | String | Filesystem absolute path to the log directory. | /var/log/zookeeper |
-| config_path | String | Filesystem absolute path to the zookeeper configuration. | /etc/zookeeper/zoo.properties |
+The data bag for the above block should have an array of
+fully-qualified hostnames, the _exact_ ones that appear in
+`node['fqdn']`, which represent the members of the Zookeeper
+ensemble. These hostnames are used when configuring the Zookeeper
+service on each node.
+```json
+{
+  "id": "zookeeper",
+  "development": {
+    "zk1.dev.inf.hostname.com",
+    "zk2.dev.inf.hostname.com",
+    "zk3.dev.inf.hostname.com"
+  },
+  "production": {
+    "zk1.prod.inf.hostname.com",
+    "zk2.prod.inf.hostname.com",
+    "zk3.prod.inf.hostname.com",
+    "zk4.prod.inf.hostname.com",
+    "zk5.prod.inf.hostname.com",
+  }
+}
+```
 
 [0]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#theapplicationcookbook
 [1]: https://zookeeper.apache.org
