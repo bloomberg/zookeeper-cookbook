@@ -1,7 +1,7 @@
 ---
 language: ruby
 notifications:
-  slack: blpsi:BvYmxrV9xj902XWTRNrkLNkR
+  slack: blpsi:eHp3Czg42iGzaTgG8sAFeD9v
 script:
   - bin/rubocop
   - bin/rspec
