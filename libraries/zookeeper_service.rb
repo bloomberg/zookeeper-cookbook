@@ -72,7 +72,7 @@ module ZookeeperClusterCookbook
       end
 
       def command
-        "bin/zkServer.sh start-foreground #{config_path}"
+        "#{current_path}/bin/zkServer.sh start-foreground #{config_path}"
       end
     end
   end
