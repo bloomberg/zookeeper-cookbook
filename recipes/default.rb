@@ -6,7 +6,7 @@
 #
 include_recipe 'selinux::permissive'
 
-node.default['java']['jdk_version'] = '7'
+node.default['java']['jdk_version'] = '8'
 node.default['java']['accept_license_agreement'] = true
 include_recipe 'java::default'
 
@@ -29,5 +29,5 @@ zookeeper_service node['zookeeper-cluster']['service_name'] do |r|
   config_path node['zookeeper-cluster']['config']['path']
 
   node['zookeeper-cluster']['service'].each_pair { |k, v| r.send(k, v) }
-  action [:create, :enable]
+  action [:enable, :start]
 end
