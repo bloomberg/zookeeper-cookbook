@@ -4,7 +4,7 @@
 #
 # Copyright (C) 2015 Bloomberg Finance L.P.
 #
-include_recipe 'selinux::permissive'
+include_recipe 'selinux::disabled'
 
 node.default['java']['jdk_version'] = '8'
 node.default['java']['accept_license_agreement'] = true
@@ -29,5 +29,4 @@ zookeeper_service node['zookeeper-cluster']['service_name'] do |r|
   config_path node['zookeeper-cluster']['config']['path']
 
   node['zookeeper-cluster']['service'].each_pair { |k, v| r.send(k, v) }
-  action [:enable, :start]
 end
