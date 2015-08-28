@@ -45,16 +45,16 @@ service on each node.
 {
   "id": "zookeeper",
   "development": {
-    "zk1.dev.inf.hostname.com",
-    "zk2.dev.inf.hostname.com",
-    "zk3.dev.inf.hostname.com"
+    "zk1.dev.inf.example.com",
+    "zk2.dev.inf.example.com",
+    "zk3.dev.inf.example.com"
   },
   "production": {
-    "zk1.prod.inf.hostname.com",
-    "zk2.prod.inf.hostname.com",
-    "zk3.prod.inf.hostname.com",
-    "zk4.prod.inf.hostname.com",
-    "zk5.prod.inf.hostname.com",
+    "zk1.prod.inf.example.com",
+    "zk2.prod.inf.example.com",
+    "zk3.prod.inf.example.com",
+    "zk4.prod.inf.example.com",
+    "zk5.prod.inf.example.com",
   }
 }
 ```
