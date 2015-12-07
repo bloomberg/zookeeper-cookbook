@@ -30,9 +30,9 @@ Zookeeper ensemble (cluster). We do this by using a data bag for each
 Chef environment. The default recipe in your wrapper cookbook may
 look something like the following block:
 ```ruby
-bag = data_bag_item('config', 'zookeeper')[node.chef_environment]
+bag = data_bag_item('config', 'zookeeper')
 node.default['zookeeper-cluster']['config']['instance_name'] = node['ipaddress']
-node.default['zookeeper-cluster']['config']['ensemble'] = bag['ensemble']
+node.default['zookeeper-cluster']['config']['ensemble'] = bag['production']
 include_recipe 'zookeeper-cluster::default'
 ```
 
@@ -41,21 +41,28 @@ fully-qualified hostnames, the _exact_ ones that appear in
 `node['fqdn']`, which represent the members of the Zookeeper
 ensemble. These hostnames are used when configuring the Zookeeper
 service on each node.
+
+To create the data bag use the following command:
+```
+export EDITOR="vim"
+knife data bag create config zookeeper
+```
+
 ```json
 {
   "id": "zookeeper",
-  "development": {
+  "development": [
     "zk1.dev.inf.example.com",
     "zk2.dev.inf.example.com",
     "zk3.dev.inf.example.com"
-  },
-  "production": {
+  ],
+  "production": [
     "zk1.prod.inf.example.com",
     "zk2.prod.inf.example.com",
     "zk3.prod.inf.example.com",
     "zk4.prod.inf.example.com",
-    "zk5.prod.inf.example.com",
-  }
+    "zk5.prod.inf.example.com"
+  ]
 }
 ```
 
