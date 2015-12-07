@@ -27,7 +27,10 @@ module ZookeeperClusterCookbook
       attribute(:properties, option_collector: true, default: {})
 
       def myid
-        ensemble.index(instance_name).next.to_s
+        ensemble_node = ensemble.index(instance_name)
+        unless ensemble_node.nil?
+          ensemble_node.next.to_s
+        end
       end
 
       # Outputs the +properties+ in the Java Properties file format. This is
