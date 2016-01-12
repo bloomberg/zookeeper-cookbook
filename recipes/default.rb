@@ -33,18 +33,4 @@ end
 
 config_directory = node.default['zookeeper-cluster']['service']['environment']['ZOOCFGDIR']
 
-template "#{config_directory}/log4j.properties" do
-	source 'log4j_properties.erb'
-	owner 'zookeeper'
-	group 'zookeeper'
-	mode '0644'
-	
-	variables({
-		rootLogLevel: 'INFO',
-		consoleThreshold: 'INFO',
-		maxFileSize: '10MB',
-		maxNumFiles: '500'
-	})
-        
-        notifies :restart, "zookeeper_service[#{node['zookeeper-cluster']['service_name']}]", :delayed
-end
+
