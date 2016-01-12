@@ -1,6 +1,7 @@
 config_dir = node['zookeeper-cluster']['service']['environment']['ZOOCFGDIR']
+prefix = node['zookeeper-cluster']['service']['environment']['
 
-template "#{config_dir}/log4j.properties" do
+template "#{config_dir}/#{prefix}log4j.properties" do
   source 'generic_properties.erb'
   mode '0644'
   owner 'zookeeper'
