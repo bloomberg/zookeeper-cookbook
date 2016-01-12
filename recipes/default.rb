@@ -30,7 +30,3 @@ zookeeper_service node['zookeeper-cluster']['service_name'] do |r|
 
   node['zookeeper-cluster']['service'].each_pair { |k, v| r.send(k, v) }
 end
-
-config_directory = node.default['zookeeper-cluster']['service']['environment']['ZOOCFGDIR']
-
-

@@ -1,4 +1,4 @@
-config_dir = default['zookeeper-cluster']['service']['environment']['ZOOCFGDIR'] 
+config_dir = node['zookeeper-cluster']['service']['environment']['ZOOCFGDIR'] 
 
 template "#{config_dir}/log4j.properties" do
   source 'generic_properties.erb'
