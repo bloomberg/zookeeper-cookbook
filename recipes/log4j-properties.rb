@@ -6,7 +6,7 @@ template "#{config_dir}/log4j.properties" do
   owner 'zookeeper'
   group 'zookeeper'
   action :create
-  variables { properties: node['zookeeper']['log4j'] }
+  variables properties: node['zookeeper']['log4j']
   only_if { node['zookeeper'].key?('log4j') && !node['zookeeper']['log4j'].empty? }  
   notifies :restart, "zookeeper_service[#{node['zookeeper-cluster']['service_name']}]", :delayed
 end
