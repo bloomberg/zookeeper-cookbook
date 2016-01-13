@@ -1,4 +1,9 @@
 # zookeeper-cluster-cookbook
+[![Build Status](https://img.shields.io/travis/bloomberg/zookeeper-cookbook.svg)](https://travis-ci.org/bloomberg/zookeeper-cookbook)
+[![Code Quality](https://img.shields.io/codeclimate/github/bloomberg/zookeeper-cookbook.svg)](https://codeclimate.com/github/bloomberg/zookeeper-cookbook)
+[![Cookbook Version](https://img.shields.io/cookbook/v/zookeeper-cluster.svg)](https://supermarket.chef.io/cookbooks/zookeeper-cluster)
+[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 [Application cookbook][0] which installs and configures
 [Apache Zookeeper][1].
 
