@@ -1,10 +1,6 @@
+require 'chefspec'
+require 'chefspec/berkshelf'
 require 'poise_boiler/spec_helper'
-require 'poise'
-
-RSpec.configure do |config|
-  config.include Halite::SpecHelper
-end
-
 require_relative '../../../libraries/zookeeper_service'
 
 describe ZookeeperClusterCookbook::Resource::ZookeeperService do
