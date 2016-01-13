@@ -90,6 +90,7 @@ module ZookeeperClusterCookbook
           package new_resource.package_name do
             version new_resource.version unless new_resource.version.nil?
             only_if { new_resource.install_method == 'package' }
+            notifies :restart, new_resource, :delayed
           end
 
           libartifact_file "zookeeper-#{new_resource.version}" do
@@ -99,6 +100,7 @@ module ZookeeperClusterCookbook
             remote_url new_resource.binary_url % { version: new_resource.version }
             remote_checksum new_resource.binary_checksum
             only_if { new_resource.install_method == 'binary' }
+            notifies :restart, new_resource, :delayed
           end
 
           directory new_resource.data_dir do
@@ -106,6 +108,7 @@ module ZookeeperClusterCookbook
             mode '0755'
             owner new_resource.user
             group new_resource.group
+            notifies :restart, new_resource, :delayed
           end
 
           directory new_resource.log_dir do
@@ -113,6 +116,7 @@ module ZookeeperClusterCookbook
             mode '0755'
             owner new_resource.user
             group new_resource.group
+            notifies :restart, new_resource, :delayed
           end
         end
         super
