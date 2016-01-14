@@ -4,6 +4,7 @@
 #
 # Copyright 2015-2016, Bloomberg Finance L.P.
 #
+
 include_recipe 'selinux::disabled'
 
 node.default['java']['jdk_version'] = '8'

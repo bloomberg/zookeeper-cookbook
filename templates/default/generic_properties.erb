@@ -1,0 +1,5 @@
+# generates generic key value properties file
+
+<% @properties.each do |key, value| %>
+<%= "#{key}=#{value}" %>
+<% end %>
