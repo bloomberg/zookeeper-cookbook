@@ -3,8 +3,8 @@ require 'chefspec/berkshelf'
 require 'chefspec/cacher'
 
 RSpec.configure do |config|
-  config.platform = 'ubuntu'
-  config.version = '12.04'
+  config.platform = 'redhat'
+  config.version = '6.6'
 
   config.color = true
   config.alias_example_group_to :describe_recipe, type: :recipe
@@ -29,5 +29,3 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 end
-
-at_exit { ChefSpec::Coverage.report! }
