@@ -1,4 +1,4 @@
-n#
+#
 # Cookbook: zookeeper-cluster
 # License: Apache 2.0
 #
