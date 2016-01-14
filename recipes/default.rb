@@ -34,7 +34,7 @@ end
 rc_file node['zookeeper-cluster']['log4j']['path'] do
   owner node['zookeeper-cluster']['service_user']
   group node['zookeeper-cluster']['service_group']
-  type :java
+  type 'java'
   options node['zookeeper-cluster']['log4j']['properties']
 
   notifies :restart, "zookeeper_service[#{name}]", :delayed
