@@ -132,9 +132,7 @@ module ZookeeperClusterCookbook
         service.command(new_resource.command)
         service.directory(new_resource.current_path)
         service.user(new_resource.user)
-        service.environment(new_resource.environment.merge(
-          'ZOO_LOG_DIR' => new_resource.log_dir
-        ))
+        service.environment(new_resource.environment.merge(ZOO_LOG_DIR: new_resource.log_dir))
         service.restart_on_update(true)
       end
     end
