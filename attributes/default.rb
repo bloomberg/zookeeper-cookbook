@@ -12,7 +12,6 @@ default['zookeeper-cluster']['config']['properties']['syncLimit'] = 2
 default['zookeeper-cluster']['config']['properties']['leaderServes'] = 'yes'
 default['zookeeper-cluster']['config']['properties']['forceSync'] = 'no'
 
-
 default['zookeeper-cluster']['service_name'] = 'zookeeper'
 default['zookeeper-cluster']['service_user'] = 'zookeeper'
 default['zookeeper-cluster']['service_group'] = 'zookeeper'
