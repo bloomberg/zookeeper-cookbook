@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.3.1
+- [PR#18] Fixes problem where java-properties gem isn't loaded.
+
 ## 1.3.0
 - [PR#16] Fixes service resource not restarting when upgraded.
 - [PR#17] Adds support for log4j configuration.

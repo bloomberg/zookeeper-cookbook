@@ -1,10 +1,10 @@
-#
+n#
 # Cookbook: zookeeper-cluster
 # License: Apache 2.0
 #
 # Copyright 2015-2016, Bloomberg Finance L.P.
 #
-include_recipe 'selinux::disabled'
+include_recipe 'selinux::disabled', 'rc::default'
 
 node.default['java']['jdk_version'] = '8'
 node.default['java']['accept_license_agreement'] = true
