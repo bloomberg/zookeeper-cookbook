@@ -36,8 +36,8 @@ Chef environment. The default recipe in your wrapper cookbook may
 look something like the following block:
 ```ruby
 bag = data_bag_item('config', 'zookeeper')[node.chef_environment]
-node.default['zookeeper-cluster']['config']['instance_name'] = node['ipaddress']
-node.default['zookeeper-cluster']['config']['ensemble'] = bag['ensemble']
+node.default['zookeeper-cluster']['config']['instance_name'] = node['fqdn']
+node.default['zookeeper-cluster']['config']['ensemble'] = bag
 include_recipe 'zookeeper-cluster::default'
 ```
 
@@ -49,18 +49,18 @@ service on each node.
 ```json
 {
   "id": "zookeeper",
-  "development": {
+  "development": [
     "zk1.dev.inf.example.com",
     "zk2.dev.inf.example.com",
     "zk3.dev.inf.example.com"
-  },
-  "production": {
+  ],
+  "production": [
     "zk1.prod.inf.example.com",
     "zk2.prod.inf.example.com",
     "zk3.prod.inf.example.com",
     "zk4.prod.inf.example.com",
     "zk5.prod.inf.example.com",
-  }
+  ]
 }
 ```
 
