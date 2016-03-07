@@ -8,6 +8,11 @@ include_recipe 'selinux::disabled', 'rc::default'
 
 node.default['java']['jdk_version'] = '8'
 node.default['java']['accept_license_agreement'] = true
+
+# FATAL: You must set the attribute node['java']['oracle']['accept_oracle_download_terms'] to true,
+# if you want to download directly from the oracle site!
+node.default['java']['oracle']['accept_oracle_download_terms'] = true
+
 include_recipe 'java::default'
 
 poise_service_user node['zookeeper-cluster']['service_user'] do

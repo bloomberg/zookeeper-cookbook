@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+gem 'berkshelf'
 gem 'poise', '~> 2.2'
 gem 'poise-service', '~> 1.0'
 gem 'poise-boiler'
