@@ -8,9 +8,16 @@ require 'poise'
 
 module ZookeeperClusterCookbook
   module Resource
+    # A `zookeeper_config` fused resource which manages a
+    # configuration for Zookeeper.
+    # @action enable
+    # @action disable
+    # @action start
+    # @action stop
+    # @action restart
+    # @action reload
+    # @since 1.0
     class ZookeeperConfig < Chef::Resource
-      # Resource to write out Zookeeper configurations.
-      # @since 1.0.0
       include Poise(fused: true)
       provides(:zookeeper_config)
 

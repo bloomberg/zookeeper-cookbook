@@ -7,9 +7,15 @@
 require 'poise_service/service_mixin'
 
 module ZookeeperClusterCookbook
-  # Resource for managing the Zookeeper service on an instance.
-  # @since 1.0.0
   module Resource
+    # A `zookeeper_service` resource which uses `poise_service`.
+    # @action enable
+    # @action disable
+    # @action start
+    # @action stop
+    # @action restart
+    # @action reload
+    # @since 1.0
     class ZookeeperService < Chef::Resource
       include Poise
       provides(:zookeeper_service)
@@ -77,9 +83,11 @@ module ZookeeperClusterCookbook
     end
   end
 
-  # Provider for managing the Zookeeper service on an instance.
-  # @since 1.0.0
   module Provider
+    # A `zookeeper_service` provider which uses `poise_service`.
+    # @see ZookeeperCookbook::Resources::ZookeeperService
+    # @provides zookeeper_service
+    # @since 1.0
     class ZookeeperService < Chef::Provider
       include Poise
       provides(:zookeeper_service)
