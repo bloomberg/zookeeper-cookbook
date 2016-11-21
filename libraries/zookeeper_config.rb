@@ -26,6 +26,7 @@ module ZookeeperClusterCookbook
       attribute(:group, kind_of: String, default: 'zookeeper')
 
       attribute(:instance_name, kind_of: String, required: true)
+      attribute(:instance_id, kind_of: Integer, required: false)
       attribute(:data_dir, kind_of: String, default: '/var/lib/zookeeper')
       attribute(:client_port, kind_of: Integer, default: 2181)
       attribute(:leader_port, kind_of: Integer, default: 2888)
@@ -34,7 +35,11 @@ module ZookeeperClusterCookbook
       attribute(:properties, option_collector: true, default: {})
 
       def myid
-        ensemble.index(instance_name).next.to_s
+        if instance_id  != nil
+          instance_id.to_s
+        else
+          ensemble.index(instance_name).next.to_s
+        end
       end
 
       # Outputs the +properties+ in the Java Properties file format. This is
