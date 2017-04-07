@@ -38,12 +38,20 @@ module ZookeeperClusterCookbook
       # Outputs the +properties+ in the Java Properties file format. This is
       # what Zookeeper daemon consumes to tweak its internal configuration.
       def to_s
-        servers = ensemble.map { |n| "server.#{ensemble.index(n).next}:#{n}:#{leader_port}:#{election_port}" }
-        properties.merge(
-          'dataDir' => data_dir,
-          'leaderPort' => leader_port,
-          'clientPort' => client_port,
-          'electionPort' => election_port).map { |kv| kv.join('=') }.concat(servers).join("\n")
+        if properties.key?(:dynamicConfigFile)
+          properties.merge(
+              'dataDir' => data_dir,
+              'leaderPort' => leader_port,
+              'clientPort' => client_port,
+              'electionPort' => election_port).map { |kv| kv.join('=') }.join("\n")
+        else
+          servers = ensemble.map { |n| "server.#{ensemble.index(n).next}:#{n}:#{leader_port}:#{election_port}" }
+          properties.merge(
+            'dataDir' => data_dir,
+            'leaderPort' => leader_port,
+            'clientPort' => client_port,
+            'electionPort' => election_port).map { |kv| kv.join('=') }.concat(servers).join("\n")
+        end
       end
 
 
