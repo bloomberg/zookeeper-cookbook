@@ -46,7 +46,6 @@ module ZookeeperClusterCookbook
           'electionPort' => election_port).map { |kv| kv.join('=') }.concat(servers).join("\n")
       end
 
-
       action(:create) do
         notifying_block do
           directory ::File.dirname(new_resource.path) do
