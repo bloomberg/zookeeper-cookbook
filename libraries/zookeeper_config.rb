@@ -26,21 +26,14 @@ module ZookeeperClusterCookbook
       attribute(:group, kind_of: String, default: 'zookeeper')
 
       attribute(:instance_name, kind_of: String, required: true)
-      attribute(:instance_id, kind_of: Integer, required: false)
+      attribute(:instance_id, kind_of: String, default: lazy { ensemble.index(instance_name).next.to_s })
+      alias_method :myid, :instance_id
       attribute(:data_dir, kind_of: String, default: '/var/lib/zookeeper')
       attribute(:client_port, kind_of: Integer, default: 2181)
       attribute(:leader_port, kind_of: Integer, default: 2888)
       attribute(:election_port, kind_of: Integer, default: 3888)
       attribute(:ensemble, kind_of: Array, default: [], required: true)
       attribute(:properties, option_collector: true, default: {})
-
-      def myid
-        if instance_id != nil
-          instance_id.to_s
-        else
-          ensemble.index(instance_name).next.to_s
-        end
-      end
 
       # Outputs the +properties+ in the Java Properties file format. This is
       # what Zookeeper daemon consumes to tweak its internal configuration.
@@ -52,6 +45,7 @@ module ZookeeperClusterCookbook
           'clientPort' => client_port,
           'electionPort' => election_port).map { |kv| kv.join('=') }.concat(servers).join("\n")
       end
+
 
       action(:create) do
         notifying_block do
@@ -72,9 +66,22 @@ module ZookeeperClusterCookbook
             mode '0644'
           end
 
-          file new_resource.path do
+          # create zoo.properties.static file and only update 
+          # zoo.properties when static file has changed.
+          # this is needed to ensure chef won't constantly update
+          # zoo.properties and force restarts of zookeeper when
+          # it dynamically updates zoo.properties.
+          file new_resource.path+".static" do
             content new_resource.to_s
             mode '0644'
+            notifies :create, 'file[config_base]', :immediately
+          end
+
+          file 'config_base' do
+            content new_resource.to_s
+            path new_resource.path
+            mode '0644'
+            action :nothing       
           end
         end
       end
